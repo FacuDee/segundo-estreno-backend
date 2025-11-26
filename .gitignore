@@ -7,6 +7,9 @@
 # Entornos de desarrollo
 # =======================
 .env
+.env.production
+.env.local
+.env*.local
 
 
 # =======================
