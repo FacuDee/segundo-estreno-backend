@@ -31,18 +31,13 @@ import { SolicitudVendedorModule } from './solicitud-vendedor/solicitud-vendedor
         autoLoadEntities: true,
         synchronize: false,
         charset: 'utf8mb4_unicode_ci',
-        logging: configService.get<string>('NODE_ENV') === 'development',
-        // ⚠️ CONFIGURACIÓN CRÍTICA PARA VERCEL + CLEVER CLOUD
+        logging: false, // Desactivar logs en producción
+        // CONFIGURACIÓN CRÍTICA PARA SERVERLESS
         extra: {
-          connectionLimit: 2, // Solo 2 conexiones por pool
+          connectionLimit: 1, // 1 conexión por función serverless
           waitForConnections: true,
           queueLimit: 0,
-          enableKeepAlive: true,
-          keepAliveInitialDelay: 0,
         },
-        // Cerrar conexiones automáticamente
-        poolSize: 2, // TypeORM pool size
-        maxQueryExecutionTime: 10000, // 10 segundos timeout
       }),
     }),
     UsuarioModule,
