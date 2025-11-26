@@ -2,7 +2,7 @@
 
 Este proyecto está configurado para usar **dos bases de datos** según el entorno:
 
-## 🔧 Configuración
+## Configuración
 
 ### **Desarrollo (Local)**
 - Archivo: `.env`
@@ -16,7 +16,7 @@ Este proyecto está configurado para usar **dos bases de datos** según el entor
 - Host: `tu-host.mysql.services.clever-cloud.com`
 - Puerto: `3306`
 
-## 🚀 Comandos de Ejecución
+## Comandos de Ejecución
 
 ### Para **desarrollo** (base de datos local):
 ```bash
@@ -28,7 +28,7 @@ npm run start:dev
 $env:NODE_ENV="production"; npm run start:dev
 ```
 
-## 📝 Notas Importantes
+## Notas Importantes
 
 1. **Sincronización de esquemas:**
    - Ambos entornos: `synchronize: false` - Para proteger datos existentes
@@ -43,7 +43,7 @@ $env:NODE_ENV="production"; npm run start:dev
    - `.env.production` → Producción (no se sube a Git)
    - `.env.example` → Plantilla de ejemplo (sí se sube a Git)
 
-## 🔐 Configuración de Credenciales
+## Configuración de Credenciales
 
 **IMPORTANTE:** Crea un archivo `CONFIGURACION_BD.md` (no incluido en Git) con tus credenciales reales.
 
@@ -55,14 +55,14 @@ $env:NODE_ENV="production"; npm run start:dev
 **Password:** tu_password  
 **Port:** 3306  
 
-## 📦 Migraciones a Producción
+## Migraciones a Producción
 
 Para crear las tablas en Clever Cloud:
 
 1. Accede a phpMyAdmin desde el panel de Clever Cloud
 2. Ejecuta el script: `db/schema_clever_cloud.sql`
 
-## 👤 Crear Usuario Admin
+## Crear Usuario Admin
 
 Ejecuta el script para generar el SQL de inserción:
 
