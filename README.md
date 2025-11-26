@@ -18,7 +18,7 @@ DB_NAME=tu-base-de-datos
 JWT_SECRET=tu-secreto-super-seguro-aqui
 
 # CORS (Frontend URL)
-FRONTEND_URL=https://tu-app-frontend.web.app
+FRONTEND_URL=https://segundo-estreno.web.app/
 ```
 
 ### Deployment en Render
@@ -43,14 +43,14 @@ FRONTEND_URL=https://tu-app-frontend.web.app
 
 ```
 src/
-+-- auth/              # Autenticación JWT, guards, decorators
-+-- carrito/           # Gestión del carrito de compras
-+-- categoria/         # Categorías de productos
-+-- prenda/            # Gestión de prendas/productos
++-- auth/              # Autenticaciï¿½n JWT, guards, decorators
++-- carrito/           # Gestiï¿½n del carrito de compras
++-- categoria/         # Categorï¿½as de productos
++-- prenda/            # Gestiï¿½n de prendas/productos
 +-- solicitud-vendedor/ # Solicitudes para ser vendedor
 +-- transaccion/       # Transacciones de compra
-+-- usuario/           # Gestión de usuarios
-+-- app.module.ts      # Módulo raíz
++-- usuario/           # Gestiï¿½n de usuarios
++-- app.module.ts      # Mï¿½dulo raï¿½z
 +-- main.ts            # Punto de entrada
 db/
 +-- schema_segundo_estreno.sql  # Schema MySQL inicial
@@ -58,13 +58,13 @@ db/
 
 ## ??? Desarrollo Local
 
-### Instalación
+### Instalaciï¿½n
 
 ```bash
 npm install
 ```
 
-### Configuración
+### Configuraciï¿½n
 
 Crear archivo `.env` con las variables mencionadas arriba.
 
@@ -74,7 +74,7 @@ Crear archivo `.env` con las variables mencionadas arriba.
 npm run start:dev
 ```
 
-El servidor estará disponible en `http://localhost:3000`
+El servidor estarï¿½ disponible en `http://localhost:3000`
 
 ### Ejecutar Tests
 
@@ -89,7 +89,7 @@ npm run test:e2e
 npm run test:cov
 ```
 
-### Build para Producción
+### Build para Producciï¿½n
 
 ```bash
 npm run build
@@ -98,9 +98,9 @@ npm run start:prod
 
 ## ?? Endpoints Principales
 
-### Autenticación
+### Autenticaciï¿½n
 - `POST /auth/register` - Registro de usuario
-- `POST /auth/login` - Login y obtención de JWT
+- `POST /auth/login` - Login y obtenciï¿½n de JWT
 
 ### Usuarios
 - `GET /usuario` - Listar usuarios
@@ -122,13 +122,13 @@ npm run start:prod
 
 ### Transacciones
 - `GET /transaccion` - Listar transacciones
-- `POST /transaccion` - Crear nueva transacción
+- `POST /transaccion` - Crear nueva transacciï¿½n
 
-### Categorías
-- `GET /categoria` - Listar categorías
-- `POST /categoria` - Crear categoría
+### Categorï¿½as
+- `GET /categoria` - Listar categorï¿½as
+- `POST /categoria` - Crear categorï¿½a
 
-## ?? Tecnologías
+## ?? Tecnologï¿½as
 
 - **Framework**: NestJS 10
 - **ORM**: TypeORM
@@ -139,14 +139,14 @@ npm run start:prod
 ## ?? Notas de Deployment
 
 - El backend debe estar desplegado antes de deployar el frontend
-- Configurar CORS con la URL del frontend en producción
+- Configurar CORS con la URL del frontend en producciï¿½n
 - La base de datos debe estar en Clever Cloud con el schema importado
-- Asegurarse de que todas las variables de entorno estén configuradas
-- El JWT_SECRET debe ser una cadena segura y única
+- Asegurarse de que todas las variables de entorno estï¿½n configuradas
+- El JWT_SECRET debe ser una cadena segura y ï¿½nica
 
 ## ?? Recursos
 
-- [Documentación NestJS](https://docs.nestjs.com/)
+- [Documentaciï¿½n NestJS](https://docs.nestjs.com/)
 - [TypeORM Documentation](https://typeorm.io/)
 - [Render Deployment](https://render.com/docs)
 - [Vercel Deployment](https://vercel.com/docs)
