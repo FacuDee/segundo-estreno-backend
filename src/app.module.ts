@@ -13,9 +13,10 @@ import { SolicitudVendedorModule } from './solicitud-vendedor/solicitud-vendedor
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ 
+    ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: process.env.NODE_ENV === 'production' ? '.env.production' : '.env',
+      envFilePath:
+        process.env.NODE_ENV === 'production' ? '.env.production' : '.env',
     }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
@@ -31,16 +32,17 @@ import { SolicitudVendedorModule } from './solicitud-vendedor/solicitud-vendedor
         synchronize: false,
         charset: 'utf8mb4_unicode_ci',
         logging: configService.get<string>('NODE_ENV') === 'development',
-        // Configuración optimizada para Vercel Serverless
+        // ⚠️ CONFIGURACIÓN CRÍTICA PARA VERCEL + CLEVER CLOUD
         extra: {
-          connectionLimit: 1, // Limitar a 1 conexión por función serverless
-          connectTimeout: 60000, // 60 segundos
-          acquireTimeout: 60000,
-          timeout: 60000,
+          connectionLimit: 2, // Solo 2 conexiones por pool
+          waitForConnections: true,
+          queueLimit: 0,
+          enableKeepAlive: true,
+          keepAliveInitialDelay: 0,
         },
-        keepConnectionAlive: false, // No mantener conexiones entre invocaciones
-        retryAttempts: 3,
-        retryDelay: 3000,
+        // Cerrar conexiones automáticamente
+        poolSize: 2, // TypeORM pool size
+        maxQueryExecutionTime: 10000, // 10 segundos timeout
       }),
     }),
     UsuarioModule,
