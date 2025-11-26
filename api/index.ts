@@ -14,15 +14,12 @@ async function bootstrap() {
     );
 
     app.enableCors({
-      origin: [
-        'http://localhost:5173',
-        'http://localhost:3000',
-        'https://segundo-estreno.web.app',
-        'https://segundo-estreno.firebaseapp.com',
-      ],
+      origin: true, // Permitir cualquier origen
       methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
       allowedHeaders: ['Content-Type', 'Authorization', 'Accept'],
       credentials: true,
+      preflightContinue: false,
+      optionsSuccessStatus: 204
     });
 
     await app.init();
@@ -31,6 +28,18 @@ async function bootstrap() {
 }
 
 export default async (req, res) => {
+  // Configurar headers CORS manualmente
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, Accept');
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
+  
+  // Manejar preflight requests (OPTIONS)
+  if (req.method === 'OPTIONS') {
+    res.status(204).end();
+    return;
+  }
+  
   const app = await bootstrap();
   return app(req, res);
 };
