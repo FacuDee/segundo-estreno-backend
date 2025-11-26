@@ -8,7 +8,13 @@ async function bootstrap() {
 
   // Configurar CORS
   app.enableCors({
-    origin: ['http://localhost:5173', 'http://localhost:3000', process.env.FRONTEND_URL || '*'],
+    origin: [
+      'http://localhost:5173',
+      'http://localhost:3000',
+      'https://segundo-estreno.web.app',
+      'https://segundo-estreno.firebaseapp.com',
+      process.env.FRONTEND_URL || '*'
+    ],
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization', 'Accept'],
     credentials: true,
@@ -48,7 +54,13 @@ bootstrap();
 export default async (req, res) => {
   const app = await NestFactory.create(AppModule);
   app.enableCors({
-    origin: ['http://localhost:5173', 'http://localhost:3000', process.env.FRONTEND_URL || '*'],
+    origin: [
+      'http://localhost:5173',
+      'http://localhost:3000',
+      'https://segundo-estreno.web.app',
+      'https://segundo-estreno.firebaseapp.com',
+      process.env.FRONTEND_URL || '*'
+    ],
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization', 'Accept'],
     credentials: true,
