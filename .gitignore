@@ -11,6 +11,9 @@
 .env.local
 .env*.local
 
+# Archivos con credenciales sensibles
+CONFIGURACION_BD.md
+
 
 # =======================
 # Logs
