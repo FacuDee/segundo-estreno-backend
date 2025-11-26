@@ -28,9 +28,19 @@ import { SolicitudVendedorModule } from './solicitud-vendedor/solicitud-vendedor
         password: configService.get<string>('DB_PASS'),
         database: configService.get<string>('DB_NAME'),
         autoLoadEntities: true,
-        synchronize: false, // Desactivado para no modificar tablas existentes
+        synchronize: false,
         charset: 'utf8mb4_unicode_ci',
         logging: configService.get<string>('NODE_ENV') === 'development',
+        // Configuración optimizada para Vercel Serverless
+        extra: {
+          connectionLimit: 1, // Limitar a 1 conexión por función serverless
+          connectTimeout: 60000, // 60 segundos
+          acquireTimeout: 60000,
+          timeout: 60000,
+        },
+        keepConnectionAlive: false, // No mantener conexiones entre invocaciones
+        retryAttempts: 3,
+        retryDelay: 3000,
       }),
     }),
     UsuarioModule,
