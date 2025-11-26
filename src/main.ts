@@ -2,6 +2,39 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { join } from 'path';
+import { ExpressAdapter } from '@nestjs/platform-express';
+import * as express from 'express';
+
+// Crear instancia de Express para reutilizar
+const expressApp = express();
+let cachedApp;
+
+async function createNestApp() {
+  if (!cachedApp) {
+    const app = await NestFactory.create(
+      AppModule,
+      new ExpressAdapter(expressApp)
+    );
+
+    // Configurar CORS
+    app.enableCors({
+      origin: [
+        'http://localhost:5173',
+        'http://localhost:3000',
+        'https://segundo-estreno.web.app',
+        'https://segundo-estreno.firebaseapp.com',
+        process.env.FRONTEND_URL || '*'
+      ],
+      methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+      allowedHeaders: ['Content-Type', 'Authorization', 'Accept'],
+      credentials: true,
+    });
+
+    await app.init();
+    cachedApp = app;
+  }
+  return cachedApp;
+}
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -48,24 +81,13 @@ async function bootstrap() {
   await app.listen(process.env.PORT ?? 3000);
 }
 
-bootstrap();
+// Solo ejecutar bootstrap si no es Vercel
+if (process.env.VERCEL !== '1') {
+  bootstrap();
+}
 
 // Exportar para Vercel serverless
-export default async (req, res) => {
-  const app = await NestFactory.create(AppModule);
-  app.enableCors({
-    origin: [
-      'http://localhost:5173',
-      'http://localhost:3000',
-      'https://segundo-estreno.web.app',
-      'https://segundo-estreno.firebaseapp.com',
-      process.env.FRONTEND_URL || '*'
-    ],
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'Accept'],
-    credentials: true,
-  });
-  await app.init();
-  const server = app.getHttpAdapter().getInstance();
-  return server(req, res);
+module.exports = async (req, res) => {
+  await createNestApp();
+  return expressApp(req, res);
 };
