@@ -44,7 +44,6 @@ FRONTEND_URL=https://segundo-estreno.web.app/
 ```
 src/
 +-- auth/              # Autenticaci�n JWT, guards, decorators
-+-- carrito/           # Gesti�n del carrito de compras
 +-- categoria/         # Categor�as de productos
 +-- prenda/            # Gesti�n de prendas/productos
 +-- solicitud-vendedor/ # Solicitudes para ser vendedor
@@ -114,11 +113,6 @@ npm run start:prod
 - `POST /prenda` - Crear nueva prenda
 - `PUT /prenda/:id` - Actualizar prenda
 - `DELETE /prenda/:id` - Eliminar prenda
-
-### Carrito
-- `GET /carrito/:usuarioId` - Obtener carrito del usuario
-- `POST /carrito` - Agregar prenda al carrito
-- `DELETE /carrito/:id` - Eliminar prenda del carrito
 
 ### Transacciones
 - `GET /transaccion` - Listar transacciones

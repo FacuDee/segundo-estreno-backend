@@ -53,24 +53,6 @@ CREATE TABLE `prendas` (
   INDEX (`categoria_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Tabla carritos (uno a uno con usuario: enforced por UNIQUE usuario_id)
-CREATE TABLE `carritos` (
-  `id_carrito` INT AUTO_INCREMENT PRIMARY KEY,
-  `usuario_id` INT NOT NULL UNIQUE,
-  `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (`usuario_id`) REFERENCES `usuarios`(`id_usuario`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- Tabla intermedia Carrito <-> Prenda (muchos a muchos: una prenda puede estar en varios carritos hasta que se venda)
-CREATE TABLE `carrito_prenda` (
-  `id_carrito` INT NOT NULL,
-  `id_prenda` INT NOT NULL,
-  `added_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id_carrito`, `id_prenda`),
-  FOREIGN KEY (`id_carrito`) REFERENCES `carritos`(`id_carrito`) ON DELETE CASCADE ON UPDATE CASCADE,
-  FOREIGN KEY (`id_prenda`) REFERENCES `prendas`(`id_prenda`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
 -- Tabla intermedia Transaccion <-> Prenda
 -- Guarda el precio al momento de la venta (snapshot) y asocia prendas a una transacción.
 CREATE TABLE `transaccion_prenda` (

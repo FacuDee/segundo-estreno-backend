@@ -5,7 +5,6 @@ import { AppService } from './app.service';
 import { UsuarioModule } from './usuario/usuario.module';
 import { PrendaModule } from './prenda/prenda.module';
 import { CategoriaModule } from './categoria/categoria.module';
-import { CarritoModule } from './carrito/carrito.module';
 import { TransaccionModule } from './transaccion/transaccion.module';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
@@ -43,7 +42,6 @@ import { SolicitudVendedorModule } from './solicitud-vendedor/solicitud-vendedor
     UsuarioModule,
     PrendaModule,
     CategoriaModule,
-    CarritoModule,
     TransaccionModule,
     AuthModule,
     SolicitudVendedorModule,
