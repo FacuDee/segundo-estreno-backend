@@ -11,7 +11,11 @@ export class UsuarioService {
   ) {}
 
   async findAll(): Promise<Usuario[]> {
-    return await this.usuarioRepository.find();
+    return await this.usuarioRepository.find({
+      order: {
+        createdAt: 'DESC', // Usuarios más recientes aparecen primero
+      },
+    });
   }
 
   async findOne(id: number): Promise<Usuario | null> {
@@ -27,16 +31,16 @@ export class UsuarioService {
     return await this.usuarioRepository.findOne({ where: { email } });
   }
 
-   async update(id: number, usuarioData: Partial<Usuario>): Promise<Usuario> {
+  async update(id: number, usuarioData: Partial<Usuario>): Promise<Usuario> {
     await this.usuarioRepository.update(id, usuarioData);
     const usuario = await this.usuarioRepository.findOneBy({ id });
-    if (!usuario) { 
+    if (!usuario) {
       throw new Error(`Usuario con id ${id} no encontrado`);
     }
     return usuario;
   }
 
-   async remove(id: number): Promise<{ deleted: boolean }> {
+  async remove(id: number): Promise<{ deleted: boolean }> {
     const result = await this.usuarioRepository.delete(id);
     return { deleted: (result.affected ?? 0) > 0 };
   }

@@ -1,11 +1,8 @@
 import { Controller, Post, Body, UnauthorizedException, Get, UseGuards } from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport';
 import { AuthService } from './auth.service';
 import { LoginDto } from './dto/login.dto';
 import { UsuarioService } from '../usuario/usuario.service';
 import * as bcrypt from 'bcrypt';
-import { Roles } from './roles.decorator';
-import { RolesGuard } from './roles.guard';
 
 @Controller('auth')
 export class AuthController {
@@ -32,12 +29,4 @@ export class AuthController {
 		});
 		return this.authService.login(newUser);
 	}
-
-	// Ejemplo de ruta protegida solo para admin
-		@Get('admin-only')
-		@UseGuards(AuthGuard('jwt'), RolesGuard)
-		@Roles('admin')
-		adminOnly() {
-			return { message: 'Solo admin puede ver esto' };
-		}
 }
