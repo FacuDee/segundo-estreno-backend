@@ -31,9 +31,9 @@ import { SolicitudVendedorModule } from './solicitud-vendedor/solicitud-vendedor
         synchronize: false,
         charset: 'utf8mb4_unicode_ci',
         logging: false, // Desactivar logs en producción
-        // CONFIGURACIÓN CRÍTICA PARA SERVERLESS
+        // CONFIGURACIÓN PARA SERVERLESS
         extra: {
-          connectionLimit: 1, // 1 conexión por función serverless
+          connectionLimit: 1, // 1 conexión por función serverless (Vercel)
           waitForConnections: true,
           queueLimit: 0,
         },

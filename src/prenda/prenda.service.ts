@@ -26,6 +26,8 @@ export class PrendaService {
       order: { createdAt: 'DESC' }
     });
   }
+
+  // Método para obtener una prenda por su ID con información de categoría y vendedor
   async findOne(id: number): Promise<Prenda | null> {
     return this.prendaRepository.findOne({ 
       where: { id }, 
@@ -33,6 +35,7 @@ export class PrendaService {
     });
   }
 
+  // Método para obtener prendas por usuario (vendedor)
   async findByUser(userId: number): Promise<Prenda[]> {
     const prendas = await this.prendaRepository.find({ 
       where: { vendedor: { id: userId } }, 
@@ -42,6 +45,8 @@ export class PrendaService {
     
     return prendas;
   }
+
+  // Método para crear una nueva prenda
   async create(createPrendaDto: any) {
     // Crear la prenda con los datos del DTO y el vendedor_id
     const prenda = this.prendaRepository.create({
@@ -55,6 +60,7 @@ export class PrendaService {
       vendedor: { id: createPrendaDto.vendedor_id },
     });
     
+    // Guardar la prenda en la base de datos
     const savedPrenda = await this.prendaRepository.save(prenda);
     return savedPrenda;
   }
@@ -111,6 +117,7 @@ export class PrendaService {
       vendedor: { id: prenda.vendedor.id },
     });
     
+    // Retornar la prenda actualizada con relaciones
     return await this.prendaRepository.findOne({ 
       where: { id: prendaId }, 
       relations: ['categoria', 'vendedor'] 
