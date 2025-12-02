@@ -1,5 +1,5 @@
 // src/prenda/prenda.service.ts
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreatePrendaDto } from './dto/create-prenda.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -12,6 +12,7 @@ export class PrendaService {
     private readonly prendaRepository: Repository<Prenda>,
   ) {}
 
+  // Método para obtener todas las prendas con información de categoría
   async findAll(): Promise<Prenda[]> {
     return this.prendaRepository.find({ 
       relations: ['categoria'],
@@ -29,10 +30,14 @@ export class PrendaService {
 
   // Método para obtener una prenda por su ID con información de categoría y vendedor
   async findOne(id: number): Promise<Prenda | null> {
-    return this.prendaRepository.findOne({ 
+    const prenda = await this.prendaRepository.findOne({ 
       where: { id }, 
       relations: ['categoria', 'vendedor'] 
     });
+    if (!prenda) {
+      throw new NotFoundException(`Prenda con ID ${id} no encontrada`);
+    }
+    return prenda;
   }
 
   // Método para obtener prendas por usuario (vendedor)
@@ -101,7 +106,7 @@ export class PrendaService {
     });
     
     if (!prenda) {
-      throw new Error(`Prenda con ID ${id} no encontrada.`);
+      throw new NotFoundException(`Prenda con ID ${id} no encontrada`);
     }
 
     // Preservar el vendedor original
@@ -127,11 +132,11 @@ export class PrendaService {
   // Método para eliminar una prenda
   async remove(id: string) {
     const prendaId = Number(id);
-    const result = await this.prendaRepository.delete(prendaId);
-    if (result.affected && result.affected > 0) {
-      return { mensaje: `Prenda con ID ${id} eliminada.` };
-    } else {
-      return { mensaje: `Prenda con ID ${id} no encontrada o ya eliminada.` };
+    const prenda = await this.prendaRepository.findOne({ where: { id: prendaId } });
+    if (!prenda) {
+      throw new NotFoundException(`Prenda con ID ${id} no encontrada`);
     }
+    await this.prendaRepository.delete(prendaId);
+    return { mensaje: `Prenda con ID ${id} eliminada` };
   }
 }

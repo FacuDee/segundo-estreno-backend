@@ -1,4 +1,4 @@
-import { Injectable, BadRequestException } from '@nestjs/common';
+import { Injectable, BadRequestException, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, In } from 'typeorm';
 import { Transaccion } from './transaccion.entity';
@@ -24,11 +24,11 @@ export class TransaccionService {
 		console.log('createTransaccion DTO:', dto, 'usuarioId:', usuarioId);
 		// Verificar usuario
 		const usuario = await this.usuarioRepo.findOne({ where: { id: usuarioId } });
-		if (!usuario) throw new BadRequestException('Usuario no encontrado');
+		if (!usuario) throw new NotFoundException('Usuario no encontrado');
 
 		// Verificar prendas y stock (carga relacionando prenda con vendedor)
 		const prendas = await this.prendaRepo.find({ where: { id: In(dto.prendas) }, relations: ['vendedor'] });
-		if (prendas.length !== dto.prendas.length) throw new BadRequestException('Alguna prenda no existe');
+		if (prendas.length !== dto.prendas.length) throw new NotFoundException('Alguna prenda no existe');
 		for (const prenda of prendas) {
 			if (!prenda.disponible) throw new BadRequestException(`Prenda ${prenda.id} no disponible`);
 			// comprobación robusta del id del vendedor

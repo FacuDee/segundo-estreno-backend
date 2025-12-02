@@ -48,6 +48,7 @@ export class PrendaController {
     }
   }
 
+  // Método para obtener prendas por usuario (vendedor)
   @Get('usuario/:userId')
   @UseGuards(AuthGuard('jwt'))
   async findByUser(@Param('userId') userId: string): Promise<Prenda[]> {
@@ -63,6 +64,7 @@ export class PrendaController {
     }
   }
 
+  // obtener una prenda por id
   @Get(':id')
   async findOne(@Param('id') id: number): Promise<Prenda | null> {
     try {
@@ -84,7 +86,7 @@ export class PrendaController {
     return this.prendaService.create(prendaData);
   }
 
-  // actualizar una prenda
+  // Actualizar una prenda
   @Put(':id')
   @UseGuards(AuthGuard('jwt'))
   async update(
@@ -128,7 +130,7 @@ export class PrendaController {
     }
   }
 
-  // borrar una prenda
+  // Borrar una prenda
   @Delete(':id')
   @UseGuards(AuthGuard('jwt'))
   async remove(@Param('id') id: string, @Request() req) {

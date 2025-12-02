@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { SolicitudVendedor } from './solicitud-vendedor.entity';
@@ -6,28 +6,31 @@ import { UsuarioService } from '../usuario/usuario.service';
 
 @Injectable()
 export class SolicitudVendedorService {
-    constructor(
+  constructor(
     @InjectRepository(SolicitudVendedor)
     private repo: Repository<SolicitudVendedor>,
     private readonly usuarioService: UsuarioService,
   ) {}
 
   create(data: { userId: number; username: string }) {
-  const solicitud = this.repo.create({ ...data });
-  return this.repo.save(solicitud);
+    const solicitud = this.repo.create(data);
+    return this.repo.save(solicitud);
   }
 
   findAll() {
     return this.repo.find({ order: { createdAt: 'DESC' } });
   }
 
-  findOne(id: number) {
-    return this.repo.findOne({ where: { id } });
+  async findOne(id: number) {
+    const solicitud = await this.repo.findOne({ where: { id } });
+    if (!solicitud) {
+      throw new NotFoundException(`Solicitud con ID ${id} no encontrada`);
+    }
+    return solicitud;
   }
 
   async updateStatus(id: number, status: 'aceptada' | 'rechazada') {
     const s = await this.findOne(id);
-    if (!s) return null;
     s.status = status;
     const saved = await this.repo.save(s);
 
@@ -37,7 +40,10 @@ export class SolicitudVendedorService {
         await this.usuarioService.update(s.userId, { rol: 'vendedor' });
       } catch (err) {
         // registrar error pero no revertir la actualización de la solicitud
-        console.error('Error al actualizar rol de usuario tras aceptar solicitud:', err);
+        console.error(
+          'Error al actualizar rol de usuario tras aceptar solicitud:',
+          err,
+        );
       }
     }
 
