@@ -2,7 +2,7 @@
 
 API REST desarrollada con NestJS y TypeORM para el proyecto Segundo Estreno.
 
-## ?? Deployment en Render/Vercel
+## Deployment en Vercel
 
 ### Variables de Entorno Requeridas
 
@@ -21,17 +21,6 @@ JWT_SECRET=tu-secreto-super-seguro-aqui
 FRONTEND_URL=https://segundo-estreno.web.app/
 ```
 
-### Deployment en Render
-
-1. Crear nuevo Web Service en Render
-2. Conectar este repositorio
-3. Configurar:
-   - **Build Command**: `npm install`
-   - **Start Command**: `npm run start:prod`
-   - **Environment**: Node
-4. Agregar las variables de entorno arriba mencionadas
-5. Deploy
-
 ### Deployment en Vercel
 
 1. Instalar Vercel CLI: `npm i -g vercel`
@@ -39,31 +28,31 @@ FRONTEND_URL=https://segundo-estreno.web.app/
 3. Configurar las variables de entorno en Vercel Dashboard
 4. Deploy: `vercel --prod`
 
-## ?? Estructura del Proyecto
+## Estructura del Proyecto
 
 ```
 src/
-+-- auth/              # Autenticaci�n JWT, guards, decorators
-+-- categoria/         # Categor�as de productos
-+-- prenda/            # Gesti�n de prendas/productos
++-- auth/              # Autenticación JWT, guards, decorators
++-- categoria/         # Categorías de productos
++-- prenda/            # Gestión de prendas/productos
 +-- solicitud-vendedor/ # Solicitudes para ser vendedor
 +-- transaccion/       # Transacciones de compra
-+-- usuario/           # Gesti�n de usuarios
-+-- app.module.ts      # M�dulo ra�z
++-- usuario/           # Gestión de usuarios
++-- app.module.ts      # Módulo raíz
 +-- main.ts            # Punto de entrada
 db/
 +-- schema_segundo_estreno.sql  # Schema MySQL inicial
 ```
 
-## ??? Desarrollo Local
+## Desarrollo Local
 
-### Instalaci�n
+### Instalación
 
 ```bash
 npm install
 ```
 
-### Configuraci�n
+### Configuración
 
 Crear archivo `.env` con las variables mencionadas arriba.
 
@@ -73,7 +62,7 @@ Crear archivo `.env` con las variables mencionadas arriba.
 npm run start:dev
 ```
 
-El servidor estar� disponible en `http://localhost:3000`
+El servidor estará disponible en `http://localhost:3000`
 
 ### Ejecutar Tests
 
@@ -88,18 +77,18 @@ npm run test:e2e
 npm run test:cov
 ```
 
-### Build para Producci�n
+### Build para Producción
 
 ```bash
 npm run build
 npm run start:prod
 ```
 
-## ?? Endpoints Principales
+## Endpoints Principales
 
-### Autenticaci�n
+### Autenticación
 - `POST /auth/register` - Registro de usuario
-- `POST /auth/login` - Login y obtenci�n de JWT
+- `POST /auth/login` - Login y obtención de JWT
 
 ### Usuarios
 - `GET /usuario` - Listar usuarios
@@ -116,13 +105,13 @@ npm run start:prod
 
 ### Transacciones
 - `GET /transaccion` - Listar transacciones
-- `POST /transaccion` - Crear nueva transacci�n
+- `POST /transaccion` - Crear nueva transacción
 
-### Categor�as
-- `GET /categoria` - Listar categor�as
-- `POST /categoria` - Crear categor�a
+### Categorías
+- `GET /categoria` - Listar categorías
+- `POST /categoria` - Crear categoría
 
-## ?? Tecnolog�as
+## Tecnologías
 
 - **Framework**: NestJS 10
 - **ORM**: TypeORM
@@ -130,17 +119,16 @@ npm run start:prod
 - **Authentication**: JWT, Passport
 - **Validation**: class-validator, class-transformer
 
-## ?? Notas de Deployment
+## Notas de Deployment
 
 - El backend debe estar desplegado antes de deployar el frontend
-- Configurar CORS con la URL del frontend en producci�n
+- Configurar CORS con la URL del frontend en producción
 - La base de datos debe estar en Clever Cloud con el schema importado
-- Asegurarse de que todas las variables de entorno est�n configuradas
-- El JWT_SECRET debe ser una cadena segura y �nica
+- Asegurarse de que todas las variables de entorno están configuradas
+- El JWT_SECRET debe ser una cadena segura y única
 
-## ?? Recursos
+## Recursos
 
-- [Documentaci�n NestJS](https://docs.nestjs.com/)
+- [Documentación NestJS](https://docs.nestjs.com/)
 - [TypeORM Documentation](https://typeorm.io/)
-- [Render Deployment](https://render.com/docs)
 - [Vercel Deployment](https://vercel.com/docs)
