@@ -4,7 +4,7 @@ import { ExpressAdapter } from '@nestjs/platform-express';
 import express from 'express';
 
 const server = express();
-let app;
+let app: any;
 
 async function bootstrap() {
   if (!app) {

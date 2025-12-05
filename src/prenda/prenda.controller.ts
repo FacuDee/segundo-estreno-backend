@@ -21,13 +21,15 @@ import { RolesGuard } from '../auth/roles.guard';
 @Controller('prenda')
 export class PrendaController {
   constructor(private readonly prendaService: PrendaService) {}
+
+  // Obtener todas las prendas
   @Get()
   async findAll(): Promise<Prenda[]> {
     try {
       return await this.prendaService.findAll();
     } catch (error) {
       throw new HttpException(
-        'Error retrieving prendas',
+        'Error recuperando todas las prendas',
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
     }
@@ -42,7 +44,7 @@ export class PrendaController {
       return await this.prendaService.findAllWithVendedor();
     } catch (error) {
       throw new HttpException(
-        'Error retrieving all prendas for admin',
+        'Error recuperando todas las prendas para admin',
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
     }
@@ -58,7 +60,7 @@ export class PrendaController {
       return prendas;
     } catch (error) {
       throw new HttpException(
-        'Error retrieving user prendas',
+        'Error recuperando prendas del usuario',
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
     }
@@ -70,7 +72,7 @@ export class PrendaController {
     try {
       return await this.prendaService.findOne(id);
     } catch (error) {
-      throw new HttpException('Prenda not found', HttpStatus.NOT_FOUND);
+      throw new HttpException('Prenda no encontrada', HttpStatus.NOT_FOUND);
     }
   }
 
@@ -97,7 +99,7 @@ export class PrendaController {
     // Verificar que la prenda pertenezca al usuario
     const prenda = await this.prendaService.findOne(+id);
     if (!prenda || prenda.vendedor?.id !== req.user.id) {
-      throw new HttpException('Prenda not found or access denied', HttpStatus.FORBIDDEN);
+      throw new HttpException('Prenda no encontrada o acceso denegado', HttpStatus.FORBIDDEN);
     }
     return this.prendaService.update(id, updatePrendaDto);
   }
@@ -114,7 +116,7 @@ export class PrendaController {
       // Admin puede actualizar cualquier prenda sin verificar propiedad
       return await this.prendaService.adminUpdate(id, updatePrendaDto);
     } catch (error) {
-      throw new HttpException('Error updating prenda', HttpStatus.INTERNAL_SERVER_ERROR);
+      throw new HttpException('Error actualizando prenda', HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
@@ -126,7 +128,7 @@ export class PrendaController {
     try {
       return await this.prendaService.remove(id);
     } catch (error) {
-      throw new HttpException('Error deleting prenda', HttpStatus.INTERNAL_SERVER_ERROR);
+      throw new HttpException('Error eliminando prenda', HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
@@ -137,7 +139,7 @@ export class PrendaController {
     // Verificar que la prenda pertenezca al usuario
     const prenda = await this.prendaService.findOne(+id);
     if (!prenda || prenda.vendedor?.id !== req.user.id) {
-      throw new HttpException('Prenda not found or access denied', HttpStatus.FORBIDDEN);
+      throw new HttpException('Prenda no encontrada o acceso denegado', HttpStatus.FORBIDDEN);
     }
     return this.prendaService.remove(id);
   }
